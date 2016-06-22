@@ -7,8 +7,6 @@ class Dog
     @id = attributes_hash[:id]
     @name = attributes_hash[:name]
     @breed = attributes_hash[:breed]
-    # @name = attributes_hash[:name]
-    # @breed = attributes_hash[:breed]
   end
 
   def self.create_table
@@ -80,23 +78,6 @@ class Dog
   end
 
   def self.find_or_create_by(name:, breed:)
-    #(attributes_hash)
-    
-    # sql = <<-SQL
-    #   SELECT * 
-    #   FROM dogs 
-    #   WHERE name = ? 
-    #   AND breed = ?
-    # SQL
-    # dog = DB[:conn].execute(sql, attributes_hash[:name],attributes_hash[:breed]).map do |attributes_hash|
-    #   self.new_from_db(attributes_hash)
-    # # if !dog.empty?
-    # #   Dog.create(attributes_hash)
-    # # else
-    # #   Dog.find_by_name(attributes_hash[:name])
-    # end
-    # dog
-
     sql = <<-SQL
       SELECT * 
       FROM dogs 
@@ -107,8 +88,6 @@ class Dog
     if !dog.empty?
       dog_data = dog[0]
       dog = Dog.new({id:dog_data[0], name:dog_data[1], breed:dog_data[2]})
-      
-      # binding.pry
     else
       dog = self.create(name:name, breed:breed)
     end
